@@ -3,7 +3,18 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import User, Loan, SavingsTransaction
 from .serializers import UserSerializer, LoanSerializer, TransactionSerializer
+import csv
+
 #from .tasks import calculate_credit_score
+@api_view(['GET'])
+def new_view(request):
+    dic={
+        'to_register':'api/register-user/',
+        'to_apply_loan':'api/apply-loan/',
+        'to_make_payment':'api/make-payment/',
+        'to_take_loan':'api/view-loan/<uuid:loan_id>/'
+    }
+    return Response(dic)
 
 
 @api_view(['POST'])
@@ -72,3 +83,6 @@ def loan_detail(request, loan_id):
     loan = get_object_or_404(Loan, id=loan_id)
     serializer = LoanSerializer(loan)
     return Response(serializer.data)
+
+
+
